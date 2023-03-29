@@ -82,7 +82,7 @@ def main():
                 precio = input("Ingrese el precio: ")
 
                 if validar_modelo(modelo, rent_a_game):
-                    if validar_titulo(titulo):
+                    if validar_titulo(titulo, rent_a_game):
                         if validar_precio(precio):
                             rent_a_game.insertar_juego(modelo, titulo, precio)
                             print("\033[1;32m \nJuego insertado\033[0m")
