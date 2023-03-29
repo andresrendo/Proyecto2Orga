@@ -1,4 +1,5 @@
 import json
+import pickle
 
 
 # __init__(self): este método se utiliza para inicializar la clase. En este caso, se inicializan los grupos primarios, los grupos de overflow y el índice de título.
@@ -44,6 +45,7 @@ class RentAGame:
     def insertar_juego(self, modelo, titulo, precio):
         juego = Juego(modelo, titulo, precio, "EN STOCK")
         indice = self.hash_func(modelo)
+
         if len(self.tabla[indice]) < self.capacidad:
             self.tabla[indice].append(juego)
         else:
@@ -98,22 +100,24 @@ class RentAGame:
                     return True
         return False
 
-    def guardar_base_de_datos(self, filename):
+    def guardar_base_de_datos(self):
         data = {
             "tabla": self.tabla,
             "overflow": self.overflow,
             "indice_titulo": self.indice_titulo
         }
-        with open(filename, "w") as f:
-            json.dump(data, f)
+        with open("base_datos", "wb") as f:
+            pickle.dump(data, f)
 
-    def cargar_base_de_datos(self, filename):
-        with open(filename, "r") as f:
-            data = json.load(f)
+    def cargar_base_de_datos(self):
+        with open("base_datos", "rb") as f:
+            data = pickle.load(f)
+
         self.tabla = data["tabla"]
         self.overflow = data["overflow"]
-        self.indice_titulo = {}
-        for juego in self.indice_titulo.values():
-            modelo = juego.modelo
-            titulo = juego.titulo
-            self.indice_titulo[titulo] = juego
+        self.indice_titulo = data["indice_titulo"]
+
+        #for juego in self.indice_titulo.values():
+        #    modelo = juego.modelo
+        #    titulo = juego.titulo
+        #    self.indice_titulo[titulo] = juego
