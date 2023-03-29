@@ -75,67 +75,70 @@ def main():
         mostrar_menu()
         opcion = input("            Seleccione la opcion de su preferencia: ")
 
-        if opcion == "1":
+        if opcion == "1": #insertar juego
+            
             while True:
                 modelo = input("\nIngrese el modelo: ")
                 titulo = input("Ingrese el título: ")
                 precio = input("Ingrese el precio: ")
 
-                if validar_modelo(modelo, rent_a_game):
-                    if validar_titulo(titulo, rent_a_game):
-                        if validar_precio(precio):
-                            rent_a_game.insertar_juego(modelo, titulo, precio)
-                            print("\033[1;32m \nJuego insertado\033[0m")
-                            break
-                #        else:
-                #            print("\033[0;31m \nPrecio inválido, por favor intente de nuevo.\033[0m")
-                #    else:
-                #        print("\033[0;31m \nTítulo inválido, por favor intente de nuevo.\033[0m")
-                #else:
-                #    print("\033[0;31m \nModelo inválido, por favor intente de nuevo.\033[0m")
+                if validar_modelo(modelo, rent_a_game) and validar_titulo(titulo, rent_a_game) and validar_precio(precio):
+                    rent_a_game.insertar_juego(modelo, titulo, precio)
+                    print("\033[1;32m \nJuego insertado\033[0m")
+                    break
 
-        elif opcion == "2":
+        elif opcion == "2": # buscar por modelo
+
             modelo = input("\nIngrese el modelo: ")
             juego = rent_a_game.buscar_por_modelo(modelo)
             if juego:
-                print(f"Título: {juego.titulo}")
-                print(f"Precio: {juego.precio}")
-                print(f"Status: {juego.status}")
+                print(f"""
+        🕹️  🎮   Modelo: {juego.modelo} 🎮 🕹️
+                Título: {juego.titulo}
+                Precio: {juego.precio}
+                Status: {juego.status}""")
             else:
-                print("\033[0;31m Juego no encontrado\033[0m")
+                print("\033[0;31m \nJuego no encontrado\033[0m")
 
-        elif opcion == "3":
+        elif opcion == "3": # buscar por titulo
+
             titulo = input("\nIngrese el título: ")
             juego = rent_a_game.buscar_por_titulo(titulo)
             if juego:
-                print(f"Modelo: {juego.modelo}")
-                print(f"Precio: {juego.precio}")
-                print(f"Status: {juego.status}")
+                print(f"""
+        🎮 🕹️   Título: {juego.titulo} 🕹️  🎮
+                Modelo: {juego.modelo}
+                Precio: {juego.precio}
+                Status: {juego.status}""")
             else:
-                print("Juego no encontrado")
+                print("\033[0;31m \nJuego no encontrado\033[0m")
 
-        elif opcion == "4":
+        elif opcion == "4": # Alquilar un juego
+
             modelo = input("\nIngrese el modelo: ")
             if rent_a_game.alquilar_juego(modelo):
-                print("Juego alquilado")
+                print("\033[1;32m \nJuego alquilado\033[0m")
             else:
-                print("Juego no disponible para alquilar")
+                print("\033[0;31m \nJuego no disponible para alquilar\033[0m")
 
-        elif opcion == "5":
+        elif opcion == "5": # Devolver un juego
+
             modelo = input("\nIngrese el modelo: ")
             if rent_a_game.devolver_juego(modelo):
-                print("Juego devuelto")
+                print("\033[1;32m \nJuego devuelto\033[0m")
             else:
-                print("Juego no disponible para devolver")
+                print("\033[0;31m \nJuego no disponible para devolver\033[0m")
 
-        elif opcion == "6":
+        elif opcion == "6": # Eliminar un juego
+
             modelo = input("\nIngrese el modelo: ")
             if rent_a_game.eliminar_juego(modelo):
-                print("Juego eliminado")
+                print("\033[1;32m \nJuego eliminado\033[0m")
             else:
-                print("Juego no encontrado")
+                print("\033[0;31m \nJuego no encontrado\033[0m")
 
-        elif opcion == "7":
+        elif opcion == "7": # Salir
+
             rent_a_game.guardar_base_de_datos()
             print("\033[1;37m \nGracias por usar RentAGame, los datos se han guardado en la base de datos.\n\033[0m")
             break

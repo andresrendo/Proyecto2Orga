@@ -1,4 +1,3 @@
-import json
 import pickle
 
 
@@ -18,9 +17,9 @@ import pickle
 
 # eliminar_juego(self, modelo): este método se utiliza para eliminar un juego de la base de datos. Busca el juego por su modelo y, si se encuentra, lo elimina de la tabla hash o del grupo de overflow y lo elimina del índice de título. Devuelve True si el juego se elimina correctamente y False si no se encuentra.
 
-# guardar_base_de_datos(self, filename): este método se utiliza para guardar los datos de la base de datos en un archivo JSON en el disco duro. Crea un diccionario con los datos de la tabla hash, los grupos de overflow y el índice de título y los guarda en un archivo JSON.
+# guardar_base_de_datos(self, filename): este método se utiliza para guardar los datos de la base de datos en un archivo de secuencia de bytes en el disco duro. Crea un diccionario con los datos de la tabla hash, los grupos de overflow y el índice de título y los guarda en un archivo "base_datos".
 
-# cargar_base_de_datos(self, filename): este método se utiliza para cargar los datos de la base de datos desde un archivo JSON en el disco duro. Abre el archivo JSON, carga los datos en un diccionario y los utiliza para actualizar los valores de la tabla hash, los grupos de overflow y el índice de título.
+# cargar_base_de_datos(self, filename): este método se utiliza para cargar los datos de la base de datos desde un archivo de secuencia de bytes en el disco duro. Abre el archivo "base_datos", y carga los datos en un diccionario
 
 
 
@@ -117,7 +116,3 @@ class RentAGame:
         self.overflow = data["overflow"]
         self.indice_titulo = data["indice_titulo"]
 
-        #for juego in self.indice_titulo.values():
-        #    modelo = juego.modelo
-        #    titulo = juego.titulo
-        #    self.indice_titulo[titulo] = juego
