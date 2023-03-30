@@ -59,6 +59,9 @@ def mostrar_menu():
 def main():
     rent_a_game = RentAGame()
     rent_a_game.cargar_base_de_datos()
+    #print(rent_a_game.tabla)
+    #print(rent_a_game.overflow)
+    #print(rent_a_game.indice_titulo)
     print("\nBase de datos cargada")
 
     print("""
@@ -76,7 +79,7 @@ def main():
         opcion = input("            Seleccione la opcion de su preferencia: ")
 
         if opcion == "1": #insertar juego
-            
+
             while True:
                 modelo = input("\nIngrese el modelo: ")
                 titulo = input("Ingrese el título: ")
@@ -95,7 +98,7 @@ def main():
                 print(f"""
         🕹️  🎮   Modelo: {juego.modelo} 🎮 🕹️
                 Título: {juego.titulo}
-                Precio: {juego.precio}
+                Precio: {juego.precio} Bs.
                 Status: {juego.status}""")
             else:
                 print("\033[0;31m \nJuego no encontrado\033[0m")
@@ -108,7 +111,7 @@ def main():
                 print(f"""
         🎮 🕹️   Título: {juego.titulo} 🕹️  🎮
                 Modelo: {juego.modelo}
-                Precio: {juego.precio}
+                Precio: {juego.precio} Bs.
                 Status: {juego.status}""")
             else:
                 print("\033[0;31m \nJuego no encontrado\033[0m")

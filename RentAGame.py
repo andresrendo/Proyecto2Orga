@@ -42,33 +42,42 @@ class RentAGame:
         return sum([ord(c) for c in modelo]) % 3
 
     def insertar_juego(self, modelo, titulo, precio):
-        juego = Juego(modelo, titulo, precio, "EN STOCK")
-        indice = self.hash_func(modelo)
 
-        if len(self.tabla[indice]) < self.capacidad:
-            self.tabla[indice].append(juego)
+        juego = Juego(modelo, titulo.upper(), precio, "EN STOCK")
+        index = self.hash_func(modelo)
+
+        if len(self.tabla[index]) < self.capacidad:
+            self.tabla[index].append(juego)
         else:
             for i in range(len(self.overflow)):
                 if len(self.overflow[i]) < self.capacidad:
                     self.overflow[i].append(juego)
                     break
-        self.indice_titulo[titulo] = juego
+        self.indice_titulo[titulo.upper()] = juego.modelo
 
     def buscar_por_modelo(self, modelo):
-        indice = self.hash_func(modelo)
-        for juego in self.tabla[indice]:
-            if juego.modelo == modelo:
+
+        index = self.hash_func(modelo.upper())
+
+        for juego in self.tabla[index]:
+            if juego.modelo == modelo.upper():
                 return juego
         for lista in self.overflow:
             for juego in lista:
-                if juego.modelo == modelo:
+                if juego.modelo == modelo.upper():
                     return juego
         return None
 
     def buscar_por_titulo(self, titulo):
-        return self.indice_titulo.get(titulo)
+        # clave primaria del juego obtenida con el indice
+        modelo_juego = self.indice_titulo.get(titulo.upper())
+        if modelo_juego:
+            return self.buscar_por_modelo(modelo_juego)
+        else:
+            return None
 
     def alquilar_juego(self, modelo):
+
         juego = self.buscar_por_modelo(modelo)
         if juego and juego.status == "EN STOCK":
             juego.status = "ALQUILADO"
@@ -77,6 +86,7 @@ class RentAGame:
             return False
 
     def devolver_juego(self, modelo):
+
         juego = self.buscar_por_modelo(modelo)
         if juego and juego.status == "ALQUILADO":
             juego.status = "EN STOCK"
@@ -85,12 +95,14 @@ class RentAGame:
             return False
 
     def eliminar_juego(self, modelo):
-        indice = self.hash_func(modelo)
-        for i, juego in enumerate(self.tabla[indice]):
+
+        index = self.hash_func(modelo)
+        for i, juego in enumerate(self.tabla[index]):
             if juego.modelo == modelo:
-                self.tabla[indice].pop(i)
+                self.tabla[index].pop(i)
                 del self.indice_titulo[juego.titulo]
                 return True
+
         for lista in self.overflow:
             for i, juego in enumerate(lista):
                 if juego.modelo == modelo:
@@ -100,6 +112,7 @@ class RentAGame:
         return False
 
     def guardar_base_de_datos(self):
+
         data = {
             "tabla": self.tabla,
             "overflow": self.overflow,
@@ -109,6 +122,7 @@ class RentAGame:
             pickle.dump(data, f)
 
     def cargar_base_de_datos(self):
+        
         with open("base_datos", "rb") as f:
             data = pickle.load(f)
 
